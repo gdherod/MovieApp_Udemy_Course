@@ -15,7 +15,7 @@ class MovieAdapter(
     private val itemClickListener: OnMovieClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    interface OnMovieClickListener {
+    fun interface OnMovieClickListener {
         fun onMovieClick(movie: Movie)
     }
 
