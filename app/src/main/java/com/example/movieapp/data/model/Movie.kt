@@ -13,8 +13,6 @@ data class Movie(
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
     val backdropPath: String = "",
-    @SerializedName("genre_ids")
-    val genreIds: List<Int> = listOf(),
     val id: Int = -1,
     @SerializedName("original_language")
     val originalLanguage: String = "",
@@ -31,7 +29,8 @@ data class Movie(
     @SerializedName("vote_average")
     val voteAverage: Double = -1.0,
     @SerializedName("vote_count")
-    val voteCount: Int = -1
+    val voteCount: Int = -1,
+    val movieType: String = ""
 )
 
 // Room
@@ -63,5 +62,32 @@ data class MovieEntity(
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double = -1.0,
     @ColumnInfo(name = "vote_count")
-    val voteCount: Int = -1
+    val voteCount: Int = -1,
+    @ColumnInfo(name = "movie_type")
+    val movieType: String = ""
+)
+
+fun List<MovieEntity>.toMovieList(): MovieList {
+    val resultList = mutableListOf<Movie>()
+    this.forEach { movieEntity ->
+        resultList.add(movieEntity.toMovie())
+    }
+    return MovieList(resultList)
+}
+
+fun MovieEntity.toMovie(): Movie = Movie(
+    this.adult,
+    this.backdropPath,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+    this.movieType
 )
