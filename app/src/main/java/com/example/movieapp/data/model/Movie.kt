@@ -91,3 +91,20 @@ fun MovieEntity.toMovie(): Movie = Movie(
     this.voteCount,
     this.movieType
 )
+
+fun Movie.toMovieEntity(movieType: String): MovieEntity = MovieEntity(
+    this.adult,
+    this.backdropPath,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+    movieType = movieType
+)
