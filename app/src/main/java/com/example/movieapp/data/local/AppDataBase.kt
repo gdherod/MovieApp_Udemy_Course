@@ -21,7 +21,6 @@ abstract class AppDataBase : RoomDatabase() {
                 AppDataBase::class.java,
                 "movie_table"
             ).build()
-
             return INSTANCE!!
         }
 

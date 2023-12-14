@@ -3,6 +3,7 @@ package com.example.movieapp.ui.movie
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -26,6 +27,7 @@ import com.example.movieapp.ui.movie.adapters.concat.UpcomingConcatAdapter
 
 class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieClickListener {
 
+    private lateinit var concatAdapter: ConcatAdapter
     private lateinit var binding: FragmentMovieBinding
     private val viewModel by viewModels<MovieViewModel> {
         MovieViewModelFactory(
@@ -35,8 +37,6 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
             )
         )
     }
-
-    private lateinit var concatAdapter: ConcatAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,9 +84,14 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
                     binding.rvMovies.adapter = concatAdapter
                 }
 
-                is Resource.Failure -> {
+                is Resource.Failure<*> -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.d("LiveData", "${result.exception}")
+                    Log.d("FetchError", "${result.exception}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -95,7 +100,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
     override fun onMovieClick(movie: Movie) {
         val action = MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(
             movie.posterPath,
-            movie.backdropPath,
+            movie.backdropPath!!,
             movie.voteAverage.toFloat(),
             movie.voteCount,
             movie.overview,

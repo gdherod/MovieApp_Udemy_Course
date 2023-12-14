@@ -12,7 +12,7 @@ data class MovieList(
 data class Movie(
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
     val id: Int = -1,
     @SerializedName("original_language")
     val originalLanguage: String = "",
@@ -40,7 +40,7 @@ data class MovieEntity(
     @ColumnInfo(name = "adult")
     val adult: Boolean = false,
     @ColumnInfo(name = "backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
     @PrimaryKey
     val id: Int = -1,
     @ColumnInfo(name = "original_language")

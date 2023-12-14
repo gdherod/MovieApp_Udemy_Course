@@ -16,7 +16,6 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMovieDetailBinding.bind(view)
-
         Glide.with(requireContext())
             .load("https://image.tmdb.org/t/p/w500${args.posterImageUrl}")
             .centerCrop()
@@ -26,7 +25,6 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
             .load("https://image.tmdb.org/t/p/w500${args.backgroundImageUrl}")
             .centerCrop()
             .into(binding.imgBackground)
-
         binding.txtDescription.text = args.overview
         binding.txtMovieTitle.text = args.title
         binding.txtLanguage.text = "Language ${args.language}"
